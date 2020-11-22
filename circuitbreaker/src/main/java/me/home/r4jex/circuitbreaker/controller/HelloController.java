@@ -23,4 +23,11 @@ public class HelloController {
     }
 
 
+    @GetMapping("success")
+    public String success() {
+        helloService.bonjourSuccess();
+        helloService.helloSuccess();
+
+        return "success";
+    }
 }

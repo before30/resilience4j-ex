@@ -29,6 +29,11 @@ public class HelloService {
         return helloCache;
     }
 
+    @CircuitBreaker(name = "helloCircuit")
+    public String helloSuccess() {
+        return "success";
+    }
+
     @CircuitBreaker(name = "bonjourCircuit", fallbackMethod = "bonjourFallback")
     public String bonjour(String name) {
         bonjourCache = restTemplate.getForObject("http://localhost:8080/api/randomSlow", String.class);
@@ -40,4 +45,8 @@ public class HelloService {
         return bonjourCache;
     }
 
+    @CircuitBreaker(name = "bonjourCircuit")
+    public String bonjourSuccess() {
+        return "success";
+    }
 }

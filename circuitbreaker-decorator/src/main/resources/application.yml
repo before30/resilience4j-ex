@@ -1,0 +1,31 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  health:
+    circuitbreakers:
+      enabled: true
+    ratelimiters:
+      enabled: true
+
+#resilience4j:
+#  circuitbreaker:
+#    configs:
+#      default:
+#        slidingWindowSize: 10
+#        slidingWindowType: COUNT_BASED
+#        minimumNumberOfCalls: 5
+#        permittedNumberOfCallsInHalfOpenState: 3
+#        automaticTransitionFromOpenToHalfOpenEnabled: true
+#        waitDurationInOpenState: 5s
+#    instances:
+#      helloCircuit:
+#        baseConfig: default
+#        failureRateThreshold: 50
+#        recordExceptions:
+#          - org.springframework.web.client.HttpServerErrorException
+#      bonjourCircuit:
+#        baseConfig: default
+#        slowCallRateThreshold: 50
+#        slowCallDurationThreshold: 100ms
