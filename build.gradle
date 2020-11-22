@@ -1,0 +1,68 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2" }
+        maven { url "https://repo.spring.io/plugins-release" }
+    }
+
+    dependencies {
+        classpath "io.spring.gradle:propdeps-plugin:0.0.10.RELEASE"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.10.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.3.5.RELEASE"
+    }
+}
+
+allprojects {
+    group = 'me.home'
+    version = '0.0.1-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "org.springframework.boot"
+
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+
+    configurations {
+        developmentOnly
+        runtimeClasspath {
+            extendsFrom developmentOnly
+        }
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+        maxParallelForks = Runtime.getRuntime().availableProcessors()
+        forkEvery = 1
+        testLogging {
+            events 'FAILED'
+        }
+
+        ignoreFailures true
+        minHeapSize = "1G"
+        maxHeapSize = "4G"
+        jvmArgs "-XX:ReservedCodeCacheSize=2g"
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        compileOnly 'org.projectlombok:lombok'
+        runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+    }
+}
