@@ -15,7 +15,7 @@ public class HelloService {
     }
 
     public String helloFallback(String name, RequestNotPermitted ex) {
-        log.info("Rate limit applied no further calls will be accepted.");
+        log.info("Rate limit applied no further calls will be accepted in 1s");
         throw new RateLimitException("Rate limit applied no further calls will be accepted.", "1");
     }
 }

@@ -3,7 +3,7 @@ resilience4j:
     configs:
       default:
         limitForPeriod: 5
-        limitRefreshPeriod: 60s
+        limitRefreshPeriod: 1s
         timeoutDuration: 0
     instances:
       helloRateLimiter:
