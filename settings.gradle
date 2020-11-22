@@ -1,5 +1,4 @@
 rootProject.name = 'r4j-ex'
-include 'r4j-backend'
 include 'r4j-api'
 include 'ratelimiter'
 include 'bulkhead'

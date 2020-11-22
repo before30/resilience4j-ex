@@ -1,4 +1,4 @@
-package me.home.r4jex.circuitbreaker.domain;
+package me.home.r4jex.circuitbreaker2.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -7,7 +7,7 @@ import java.util.Random;
 
 @Service
 @Slf4j
-public class GreetingService {
+public class BackendService {
     private final Random random = new Random();
 
     public String randomError() {
@@ -15,7 +15,7 @@ public class GreetingService {
 
         if (i == 0) {
             log.info("Greeting Service will generate exception.");
-            throw new GreetingRandomException("Random Exception.");
+            throw new RandomException("Random Exception.");
         }
         return "Good Morning.";
     }

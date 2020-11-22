@@ -1,8 +1,8 @@
-package me.home.r4jex.circuitbreaker.controller;
+package me.home.r4jex.circuitbreaker2.controller;
 
 import lombok.AllArgsConstructor;
-import me.home.r4jex.circuitbreaker.domain.GreetingService;
-import me.home.r4jex.circuitbreaker.domain.GreetingRandomException;
+import me.home.r4jex.circuitbreaker2.domain.BackendService;
+import me.home.r4jex.circuitbreaker2.domain.RandomException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
-public class GreetingController {
+public class BackendController {
 
-    private final GreetingService greetingService;
+    private final BackendService backendService;
 
     @GetMapping("randomError")
     public String randomError() {
-        return greetingService.randomError();
+        return backendService.randomError();
     }
 
     @GetMapping("randomSlow")
     public String randomSlow() {
-        return greetingService.randomSlow();
+        return backendService.randomSlow();
     }
 
-    @ExceptionHandler(GreetingRandomException.class)
-    public ResponseEntity randomErrorHandler(GreetingRandomException ex) {
+    @ExceptionHandler(RandomException.class)
+    public ResponseEntity randomErrorHandler(RandomException ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ex.getMessage());
     }
