@@ -1,11 +1,11 @@
-package me.home.r4jex.backend;
+package me.home.r4jex.circuitbreaker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BackendApplication {
+public class CircuitBreakerApplication {
     public static void main(String[] args) {
-        SpringApplication.run(BackendApplication.class, args);
+        SpringApplication.run(CircuitBreakerApplication.class, args);
     }
 }

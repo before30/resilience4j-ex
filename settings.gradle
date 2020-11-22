@@ -3,4 +3,5 @@ include 'r4j-backend'
 include 'r4j-api'
 include 'ratelimiter'
 include 'bulkhead'
+include 'circuitbreaker'
 
