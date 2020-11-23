@@ -6,6 +6,7 @@ import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.github.resilience4j.decorators.Decorators;
+import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.Duration;
+import java.util.function.Supplier;
 
 @Service
 @Slf4j
@@ -74,15 +76,19 @@ public class HelloService {
         return holaCache;
     }
 
-    @io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker(name = "nihau_circuit", fallbackMethod = "nihauFallback")
-    @io.github.resilience4j.bulkhead.annotation.Bulkhead(name = "nihau_bulkhead")
     public String nihau(String name) {
-        nihauCache = restTemplate.getForObject("http://localhost:8080/api/randomError", String.class);
-        return nihauCache;
+        Supplier<String> decoratedSupplier = CircuitBreaker
+                .decorateSupplier(nihauCircuit, () -> {
+                    nihauCache = restTemplate.getForObject("http://localhost:8080/api/randomError", String.class);
+                    return nihauCache;
+                });
+        return Try.ofSupplier(decoratedSupplier)
+                .recover(this::nihauFallback)
+                .get();
     }
 
-    private String nihauFallback(String name, Throwable ex) {
-        log.info("nihau fallback. name({}), {}", name, ex.getMessage());
+    private String nihauFallback(Throwable ex) {
+        log.info("nihau fallback. {}", ex.getMessage());
         return nihauCache;
     }
 
@@ -92,7 +98,6 @@ public class HelloService {
                 .get();
     }
 
-    @io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker(name = "nihau_circuit")
     public String nihauSuccess() {
         return "success";
     }
