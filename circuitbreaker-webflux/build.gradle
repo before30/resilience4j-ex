@@ -1,14 +1,12 @@
-plugins {
-    id 'java'
-}
-
-group 'me.home'
-version '0.0.1-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'io.github.resilience4j:resilience4j-spring-boot2:1.4.0'
+    implementation 'io.github.resilience4j:resilience4j-all:1.4.0' // Decorate로 사용하는 경우
+    implementation 'io.github.resilience4j:resilience4j-micrometer:1.4.0'
+    implementation 'org.springframework.boot:spring-boot-starter-aop' // annotation으로 사용하는 경우
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+}
+
+test {
+    useJUnitPlatform()
 }
