@@ -8,9 +8,11 @@ import io.github.resilience4j.micrometer.tagged.TaggedCircuitBreakerMetrics;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;
 
+@Configuration
 public class CircuitConfig {
 
     @Bean
