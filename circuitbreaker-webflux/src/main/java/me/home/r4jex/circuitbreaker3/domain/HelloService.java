@@ -1,14 +1,19 @@
 package me.home.r4jex.circuitbreaker3.domain;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
+import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.github.resilience4j.reactor.circuitbreaker.operator.CircuitBreakerOperator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
+
+import java.time.Duration;
 
 @Service
 @Slf4j
@@ -20,8 +25,19 @@ public class HelloService {
 
     public HelloService(final RestTemplateBuilder restTemplateBuilder,
                         final CircuitBreakerRegistry circuitBreakerRegistry) {
-        namasteCircuit = circuitBreakerRegistry.circuitBreaker("namaste_circuit");
-        salaamCircuit = circuitBreakerRegistry.circuitBreaker("salaam_circuit");
+
+        CircuitBreakerConfig circuitConfig = CircuitBreakerConfig.custom()
+                .slidingWindow(100, 5, CircuitBreakerConfig.SlidingWindowType.COUNT_BASED)
+                .permittedNumberOfCallsInHalfOpenState(30)
+                .automaticTransitionFromOpenToHalfOpenEnabled(true)
+                .waitDurationInOpenState(Duration.ofSeconds(30))
+                .failureRateThreshold(30)
+                .recordExceptions(HttpServerErrorException.class,
+                        WebClientResponseException.class)
+                .build();
+
+        namasteCircuit = circuitBreakerRegistry.circuitBreaker("namaste_circuit", circuitConfig);
+        salaamCircuit = circuitBreakerRegistry.circuitBreaker("salaam_circuit", circuitConfig);
         restTemplate = restTemplateBuilder.build();
     }
 
