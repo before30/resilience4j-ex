@@ -17,7 +17,7 @@ public class BackendService {
             log.info("Greeting Service will generate exception.");
             throw new RandomException("Random Exception.");
         }
-        return "Good Morning.";
+        return "Hello from backend";
     }
 
     public String randomSlow() {
@@ -31,6 +31,6 @@ public class BackendService {
             }
         }
 
-        return "Good Afternoon.";
+        return "Bonjour from backend";
     }
 }

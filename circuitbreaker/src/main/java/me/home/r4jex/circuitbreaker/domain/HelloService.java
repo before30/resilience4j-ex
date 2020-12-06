@@ -11,8 +11,6 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class HelloService {
     private final RestTemplate restTemplate;
-    private String helloCache = "";
-    private String bonjourCache = "";
 
     public HelloService(RestTemplateBuilder restTemplateBuilder) {
         restTemplate = restTemplateBuilder.build();
@@ -20,13 +18,12 @@ public class HelloService {
 
     @CircuitBreaker(name = "helloCircuit", fallbackMethod = "helloFallback")
     public String hello(String name) {
-        helloCache = restTemplate.getForObject("http://localhost:8080/api/randomError", String.class);
-        return helloCache;
+        return restTemplate.getForObject("http://localhost:8080/api/randomError", String.class);
     }
 
     public String helloFallback(String name, CallNotPermittedException ex) {
         log.info("Hello Circuit(Error) is in open state. it's fallback.");
-        return helloCache;
+        return "hello fallback";
     }
 
     @CircuitBreaker(name = "helloCircuit")
@@ -36,13 +33,12 @@ public class HelloService {
 
     @CircuitBreaker(name = "bonjourCircuit", fallbackMethod = "bonjourFallback")
     public String bonjour(String name) {
-        bonjourCache = restTemplate.getForObject("http://localhost:8080/api/randomSlow", String.class);
-        return bonjourCache;
+        return restTemplate.getForObject("http://localhost:8080/api/randomSlow", String.class);
     }
 
     public String bonjourFallback(String name, CallNotPermittedException ex) {
         log.info("Bonjour Circuit(slow) is in open state. it's fallback.");
-        return bonjourCache;
+        return "bonjour fallback";
     }
 
     @CircuitBreaker(name = "bonjourCircuit")
