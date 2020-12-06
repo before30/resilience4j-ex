@@ -4,4 +4,5 @@ include 'bulkhead'
 include 'circuitbreaker'
 include 'circuitbreaker-decorator'
 include 'circuitbreaker-webflux'
+include 'circuitbreaker-chaos'
 

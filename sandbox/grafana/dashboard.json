@@ -17,7 +17,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1606053471329,
+  "iteration": 1607241948457,
   "links": [],
   "panels": [
     {
@@ -235,7 +235,7 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
+        "h": 5,
         "w": 12,
         "x": 0,
         "y": 6
@@ -352,7 +352,7 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 7,
+        "h": 5,
         "w": 12,
         "x": 12,
         "y": 6
@@ -425,7 +425,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 11
       },
       "id": 15,
       "panels": [],
@@ -433,8 +433,8 @@
       "scopedVars": {
         "circuitbreaker_name": {
           "selected": true,
-          "text": "bonjourCircuit",
-          "value": "bonjourCircuit"
+          "text": "hola_circuit",
+          "value": "hola_circuit"
         }
       },
       "title": "CircuitBreaker",
@@ -469,7 +469,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 14
+        "y": 12
       },
       "id": 2,
       "interval": null,
@@ -505,8 +505,8 @@
       "scopedVars": {
         "circuitbreaker_name": {
           "selected": true,
-          "text": "bonjourCircuit",
-          "value": "bonjourCircuit"
+          "text": "hola_circuit",
+          "value": "hola_circuit"
         }
       },
       "sparkline": {
@@ -515,7 +515,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "bonjourCircuit",
+      "tableColumn": "hola_circuit",
       "targets": [
         {
           "expr": "resilience4j_circuitbreaker_failure_rate{name=\"$circuitbreaker_name\"}",
@@ -570,7 +570,7 @@
         "h": 7,
         "w": 16,
         "x": 8,
-        "y": 14
+        "y": 12
       },
       "hiddenSeries": false,
       "id": 23,
@@ -601,8 +601,8 @@
       "scopedVars": {
         "circuitbreaker_name": {
           "selected": true,
-          "text": "bonjourCircuit",
-          "value": "bonjourCircuit"
+          "text": "hola_circuit",
+          "value": "hola_circuit"
         }
       },
       "seriesOverrides": [],
@@ -611,21 +611,18 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "increase(resilience4j_circuitbreaker_calls_seconds_count{name=\"$circuitbreaker_name\"}[1m])",
-          "format": "time_series",
-          "hide": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "{{ kind }} ",
-          "refId": "A"
-        },
-        {
-          "expr": "increase(resilience4j_circuitbreaker_calls_total{name=\"$circuitbreaker_name\"}[1m])",
+          "expr": "increase(resilience4j_circuitbreakernot_permitted_calls_total{name=\"$circuitbreaker_name\"}[1m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ kind  }} ",
           "refId": "B"
+        },
+        {
+          "expr": "increase(resilience4j_circuitbreaker_calls_seconds_count{name=\"$circuitbreaker_name\"}[1m])",
+          "interval": "",
+          "legendFormat": "{{kind }}",
+          "refId": "A"
         }
       ],
       "thresholds": [],
@@ -670,149 +667,11 @@
       }
     },
     {
-      "collapsed": false,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 21
-      },
-      "id": 24,
-      "panels": [],
-      "repeatIteration": 1606053471329,
-      "repeatPanelId": 15,
-      "scopedVars": {
-        "circuitbreaker_name": {
-          "selected": true,
-          "text": "helloCircuit",
-          "value": "helloCircuit"
-        }
-      },
-      "title": "CircuitBreaker",
-      "type": "row"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": "Prometheus",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": true,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 0,
-        "y": 22
-      },
-      "id": 25,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "pluginVersion": "6.1.6",
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "repeat": null,
-      "repeatDirection": "h",
-      "repeatIteration": 1606053471329,
-      "repeatPanelId": 2,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "circuitbreaker_name": {
-          "selected": true,
-          "text": "helloCircuit",
-          "value": "helloCircuit"
-        }
-      },
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "helloCircuit",
-      "targets": [
-        {
-          "expr": "resilience4j_circuitbreaker_failure_rate{name=\"$circuitbreaker_name\"}",
-          "format": "time_series",
-          "hide": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "{{ name }}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "40,50",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Failure Rate: $circuitbreaker_name",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        },
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "-1"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "aliasColors": {
-        "failed ": "red",
-        "ignored ": "blue",
-        "not_permitted ": "orange",
-        "successful ": "green"
-      },
+      "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -822,28 +681,24 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 16,
-        "x": 8,
-        "y": 22
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 19
       },
       "hiddenSeries": false,
-      "id": 26,
-      "interval": "",
+      "id": 25,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
-        "rightSide": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
         "show": true,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
-      "links": [],
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
@@ -851,16 +706,13 @@
       "percentage": false,
       "pluginVersion": "7.3.3",
       "pointradius": 2,
-      "points": true,
+      "points": false,
       "renderer": "flot",
-      "repeatIteration": 1606053471329,
-      "repeatPanelId": 23,
-      "repeatedByRow": true,
       "scopedVars": {
         "circuitbreaker_name": {
           "selected": true,
-          "text": "helloCircuit",
-          "value": "helloCircuit"
+          "text": "hola_circuit",
+          "value": "hola_circuit"
         }
       },
       "seriesOverrides": [],
@@ -869,28 +721,17 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "increase(resilience4j_circuitbreaker_calls_seconds_count{name=\"$circuitbreaker_name\"}[1m])",
-          "format": "time_series",
-          "hide": false,
+          "expr": "sum by (status) (increase(http_server_requests_seconds_count[1m]))",
           "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "{{ kind }} ",
+          "legendFormat": "{{status}}",
           "refId": "A"
-        },
-        {
-          "expr": "increase(resilience4j_circuitbreaker_calls_total{name=\"$circuitbreaker_name\"}[1m])",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "{{ kind  }} ",
-          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Call rate: $circuitbreaker_name",
+      "title": "HTTP Requests",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -907,7 +748,7 @@
       "yaxes": [
         {
           "format": "short",
-          "label": "Calls/sec",
+          "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
@@ -937,16 +778,9 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "tags": [],
-          "text": [
-            "bonjourCircuit",
-            "helloCircuit"
-          ],
-          "value": [
-            "bonjourCircuit",
-            "helloCircuit"
-          ]
+          "selected": false,
+          "text": "hola_circuit",
+          "value": "hola_circuit"
         },
         "datasource": "Prometheus",
         "definition": "label_values(resilience4j_circuitbreaker_state, name)",
@@ -971,7 +805,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -1001,5 +835,5 @@
   "timezone": "",
   "title": "CircuitBreaker",
   "uid": "DshZ5zmWk",
-  "version": 6
+  "version": 8
 }
