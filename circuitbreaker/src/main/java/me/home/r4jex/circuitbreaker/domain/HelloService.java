@@ -21,7 +21,7 @@ public class HelloService {
         return restTemplate.getForObject("http://localhost:8080/api/randomError", String.class);
     }
 
-    public String helloFallback(String name, CallNotPermittedException ex) {
+    public String helloFallback(String name, Throwable ex) {
         log.info("Hello Circuit(Error) is in open state. it's fallback.");
         return "hello fallback";
     }
@@ -36,7 +36,7 @@ public class HelloService {
         return restTemplate.getForObject("http://localhost:8080/api/randomSlow", String.class);
     }
 
-    public String bonjourFallback(String name, CallNotPermittedException ex) {
+    public String bonjourFallback(String name, Throwable ex) {
         log.info("Bonjour Circuit(slow) is in open state. it's fallback.");
         return "bonjour fallback";
     }

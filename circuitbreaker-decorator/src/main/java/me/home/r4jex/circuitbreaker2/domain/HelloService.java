@@ -26,9 +26,6 @@ public class HelloService {
     private final Bulkhead nihauBulkhead;
     private final RestTemplate restTemplate;
 
-    private String holaCache = "";
-    private String nihauCache = "";
-
     public HelloService(final CircuitBreakerRegistry circuitBreakerRegistry,
                         final BulkheadRegistry bulkheadRegistry,
                         final RestTemplateBuilder restTemplateBuilder) {
@@ -67,20 +64,18 @@ public class HelloService {
     }
 
     private String doHola(String name) {
-        holaCache = restTemplate.getForObject("http://localhost:8080/api/randomError", String.class);
-        return holaCache;
+        return restTemplate.getForObject("http://localhost:8080/api/randomError", String.class);
     }
 
     private String holaFallback(Throwable ex) {
         log.info("hola fallback. {}", ex.getMessage());
-        return holaCache;
+        return "hola fallback";
     }
 
     public String nihau(String name) {
         Supplier<String> decoratedSupplier = CircuitBreaker
                 .decorateSupplier(nihauCircuit, () -> {
-                    nihauCache = restTemplate.getForObject("http://localhost:8080/api/randomError", String.class);
-                    return nihauCache;
+                    return restTemplate.getForObject("http://localhost:8080/api/randomError", String.class);
                 });
         return Try.ofSupplier(decoratedSupplier)
                 .recover(this::nihauFallback)
@@ -89,7 +84,7 @@ public class HelloService {
 
     private String nihauFallback(Throwable ex) {
         log.info("nihau fallback. {}", ex.getMessage());
-        return nihauCache;
+        return "nihau fallback";
     }
 
     public String holaSuccess() {
